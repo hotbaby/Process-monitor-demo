@@ -50,8 +50,9 @@ void restart_process(int argc, char **argv)
     }
     else if (pid == 0) // child process
     {
-        char *newargv[] = {NULL};
-        char *newenv[] = {NULL};
+        //char *newargv[] = {NULL};
+        char **newargv = &argv[1];
+        char **newenv = {NULL};
         execve(argv[0], newargv, newenv);
     }
 
@@ -76,8 +77,8 @@ int main(int argc, char **argv)
     }
     else if (pid == 0) // child process
     {
-        char *newargv[] = {NULL};
-        char *newenv[] = {NULL};
+        char **newargv = &argv[2];
+        char **newenv = {NULL};
         execve(argv[1], newargv, newenv);
     }
 
@@ -96,6 +97,7 @@ int main(int argc, char **argv)
         if (signal_flags & SIGNAL_CHILD)
         {
             //restart process
+            wait(NULL);
             restart_process(newargc, newargv);
             signal_flags &= ~SIGNAL_CHILD;
         }
