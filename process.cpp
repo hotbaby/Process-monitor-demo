@@ -52,7 +52,7 @@ void restart_process(int argc, char **argv)
     {
         //char *newargv[] = {NULL};
         char **newargv = &argv[1];
-        char **newenv = {NULL};
+        char *newenv[] = {"PATH=/usr/bin:/usr/local/bin:/usr/sbin:/usr/local/sbin:/bin:/sbin", NULL};
         execve(argv[0], newargv, newenv);
     }
 
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     else if (pid == 0) // child process
     {
         char **newargv = &argv[2];
-        char **newenv = {NULL};
+        char *newenv[] = {"PATH=/usr/bin:/usr/local/bin:/usr/sbin:/usr/local/sbin:/bin:/sbin", NULL};
         execve(argv[1], newargv, newenv);
     }
 
